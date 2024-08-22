@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Filter Age</title>
+</head>
+<h1>Filter Subscribers By Age!</h1>
+Enter the age threshold: all subscribers older than the threshold will be deleted
+<br><br>
+<form action="/process-age-filter" method="post">
+    <label for="age"></label>
+    <input type="number" id="age" name="age" min="1" max="100">
+
+    <input type="submit" value="Submit">
+</form>
+<body>
+</body>
+</html>

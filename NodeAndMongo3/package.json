@@ -1,0 +1,21 @@
+{
+  "name": "nodeandmongo3",
+  "version": "1.0.0",
+  "description": "This server is designed to accept \"subscribers\" who want all the junk I plan on throwing onto the internet. Subscribers must worship the Greats of Computer Science. For Modern Data Management",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: No test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "Greengart_Shimon_2018998974"
+  },
+  "author": "Shimmy Greengart",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.3",
+    "express-async-errors": "^3.1.1",
+    "mongodb": "^6.4.0",
+    "mongoose": "^8.2.1"
+  }
+}

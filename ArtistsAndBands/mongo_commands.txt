@@ -1,0 +1,60 @@
+use artists_and_bands
+
+# Query 1:
+db.band_collection.aggregate([
+    {$sample: {size: 1}}
+])
+
+# Query 2:
+db.band_collection.aggregate([
+    {$group: {_id: "$name"}},
+    {$count: "name"}
+])
+
+# Query 3:
+db.band_collection.aggregate([
+    {$unwind: "$artists"},
+    {$match: {name: "Men at Work"}},
+    {$count: "name"}
+])
+
+# Query 4:
+db.band_collection.aggregate([
+    {$unwind: "$artists"},
+    {$match: {"artists.name": "Paul McCartney"}},
+    {$count: "name"}
+])
+
+# Query 5:
+db.band_collection.aggregate([
+    {$unwind: "$artists"},
+    {$match: {"artists.name": "John Cooper", name: "Skillet"}},
+    {$project: {artist: "$artists.name", band: "$name", roles: "$artists.roles", _id: 0}}
+])
+
+# Query 6:
+db.band_collection.aggregate([
+    {$project: {_id: 0, name: 1, num_artists: {$size: "$artists"}}},
+    {$match: {"num_artists": {$gt: 50}}}
+])
+
+# Query 7:
+db.band_collection.aggregate([
+    {$unwind: "$artists"},
+    {$unwind: "$artists.roles"},
+    {$group: {_id: "$artists.name", roles: {$push: "$artists.roles"}}},
+    {$project: {name: "$_id", _id: 0, role_size: {$size: "$roles"}}},
+    {$match: {role_size: {$gt: 10}}},
+    {$sort: {role_size: 1}}
+])
+
+# Old query 7, when I thought we didn't want to double-count the same role with the same artist:
+db.band_collection.aggregate([
+    {$unwind: "$artists"},
+    {$unwind: "$artists.roles"},
+    {$group: {_id: {name: "$artists.name", role: "$artists.roles"}}},
+    {$group: {_id: "$_id.name", roles: {$push: "$_id.role"}}},
+    {$project: {name: "$_id", _id: 0, role_size: {$size: "$roles"}}},
+    {$match: {role_size: {$gt: 10}}},
+    {$sort: {role_size: 1}}
+])
