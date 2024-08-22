@@ -25,7 +25,7 @@ limit 7;
 -- Each tuple should contain (and be labeled as) in this order: state, number moved.
 select STABR as state, count(*) as "number moved"
 from lib2018
-where LSABOUND='Y'
+where STAT_ADDR="07"
 group by state
 order by "number moved" desc
 limit 10;
